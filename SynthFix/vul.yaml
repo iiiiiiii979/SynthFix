@@ -1,0 +1,28 @@
+rules:
+  # JavaScript: Avoid using eval()
+  - id: find-eval
+    patterns:
+      - pattern: eval($CODE)
+    message: Avoid using `eval()` for security reasons.
+    languages: [javascript]
+    severity: WARNING
+
+  # JavaScript: Avoid directly using user input in code
+  - id: user-input-in-code
+    patterns:
+      - pattern: $VAR = $REQ.body.$INPUT;
+      - metavariable-pattern:
+          metavariable: $INPUT
+          pattern: $REQ.body
+    message: Avoid directly using user input in code; validate and sanitize inputs.
+    languages: [javascript]
+    severity: ERROR
+
+  # JavaScript: Avoid transmitting sensitive data over HTTP
+  - id: plaintext-sensitive-info
+    patterns:
+      - pattern: fetch("http://$URL")
+    message: Avoid transmitting sensitive data over an unencrypted HTTP connection.
+    languages: [javascript]
+    severity: ERROR
+
